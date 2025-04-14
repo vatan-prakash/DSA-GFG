@@ -9,30 +9,25 @@ using namespace std;
 class Solution {
   public:
     int maxLen(vector<int>& arr) {
-        // code here
-      unordered_map<int, int> prefixSumMap;
-        int sum = 0;          // Prefix sum variable
-        int maxLength = 0;    // Variable to store the maximum length of subarray with sum 0
-
-        for (int i = 0; i < arr.size(); i++) {
-            sum += arr[i]; // Calculate the running prefix sum
-
-            // Case 1: If the prefix sum becomes 0, the subarray from 0 to i has sum 0
-            if (sum == 0) {
-                maxLength = max(maxLength, i + 1);
-            }
-
-            // Case 2: If the prefix sum has been seen before
-            if (prefixSumMap.find(sum) != prefixSumMap.end()) {
-                // Calculate the length of the subarray between the previous occurrence and the current index
-                maxLength = max(maxLength, i - prefixSumMap[sum]);
-            } else {
-                // Case 3: If the prefix sum is seen for the first time, store it in the map
-                prefixSumMap[sum] = i;
-            }
+        unordered_map<int,int> mp;
+        int maxlen=0;
+          int sum=0;
+        for(int i=0;i<arr.size();i++){
+           
+             sum+=arr[i];
+             if(sum==0){
+                 maxlen = i+1;
+             }
+             
+             if(mp.find(sum)!=mp.end()){
+                 maxlen = max(maxlen, i-mp[sum]);
+             }
+             else{
+                 mp[sum]=i;
+             }
         }
-
-        return maxLength;
+        
+        return maxlen;
     }
 };
 
