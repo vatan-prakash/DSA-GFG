@@ -5,48 +5,48 @@ using namespace std;
 
 // } Driver Code Ends
 
-
 class Solution {
   public:
-   vector<int> FirstNegativeInteger(vector<int>& arr, int k) {
-    deque<int> ans;
-    vector<int> result;
-    
-    int i = 0, j = 0;
-    
-    while (j < arr.size()) {
-        // Add negative numbers to deque
-        if (arr[j] < 0) {
-            ans.push_back(arr[j]);
-        }
-
-        // If window size not reached, move forward
-        if (j - i + 1 < k) {
-            j++;
-        } 
-        // When window size is exactly 'k'
-        else if (j - i + 1 == k) {
-            // If deque is empty, push 0; otherwise, push front element
-            if (!ans.empty()) {
-                result.push_back(ans.front());
-            } else {
-                result.push_back(0);
-            }
-
-            // Remove element going out of window
-            if (!ans.empty() && arr[i] == ans.front()) {
-                ans.pop_front();
-            }
+    vector<int> firstNegInt(vector<int>& arr, int k) {
+        // write code here
+        vector<int> result;
+        deque<int> dq;
+        
+        int i=0;
+        int j=0;
+        
+        while(j<arr.size()){
             
-            // Slide the window
-            i++;
+            if(arr[j]<0){
+                dq.push_back(arr[j]);
+            }
+
+            
+           if(j-i+1==k){
+                if(dq.empty()){
+                        result.push_back(0);
+                }
+                
+                
+                else{
+                    result.push_back(dq.front());
+                }
+                
+                if(!dq.empty() && arr[i]==dq.front()){
+                    dq.pop_front();
+                }
+                
+                i++;
+            }
             j++;
         }
+        
+        return result;
     }
     
-    return result;
-   }
+    
 };
+
 
 //{ Driver Code Starts.
 int main() {
@@ -67,7 +67,7 @@ int main() {
         getline(cin, ks);
         int k = stoi(ks);
         Solution ob;
-        vector<int> ans = ob.FirstNegativeInteger(arr, k);
+        vector<int> ans = ob.firstNegInt(arr, k);
         for (auto it : ans) {
             cout << it << " ";
         }
